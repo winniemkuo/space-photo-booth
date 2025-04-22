@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astronaut Photo Booth</title>
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <script defer src="script.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      margin: 0;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    canvas {
+      width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      margin-top: 1rem;
+    }
+
+    #templateSelector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    #facePreviewContainer canvas {
+      width: 70px;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 12px 16px;
+      font-size: 16px;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    input[type="file"] {
+      font-size: 16px;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Select a Template</h2>
+  <div id="templateSelector"></div>
+
+  <h2>Upload a Group Photo</h2>
+  <input type="file" id="photoInput" accept="image/*" capture="environment" />
+
+  <canvas id="finalCanvas" width="800" height="800"></canvas>
+
+  <h3 style="font-size: 1rem; margin-top: 1.5rem;">👩‍🚀 Detected Faces</h3>
+  <div id="facePreviewContainer"></div>
+
+  <button onclick="downloadImage()">Download Team Photo</button>
+
+  <script>
+    function downloadImage() {
+      const canvas = document.getElementById("finalCanvas");
+      const link = document.createElement("a");
+      link.download = "space_team_photo.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+  </script>
+
+</body>
+</html>
