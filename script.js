@@ -77,6 +77,20 @@ async function handlePhotoUpload() {
     previewCtx.drawImage(crop, 0, (slot.height - faceH) / 2, faceW, faceH);
     document.getElementById('facePreviewContainer').appendChild(previewCanvas);
   });
+
+  // Add event title at top
+    ctx.font = "bold 28px sans-serif";
+    ctx.fillStyle = "#ffdd57";
+    ctx.textAlign = "center";
+    ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+    ctx.shadowBlur = 4;
+    ctx.fillText(document.getElementById("eventTitle").value, canvas.width / 2, 40);
+
+    // Draw custom bottom caption
+    const captionText = document.getElementById("bottomText").value;
+    ctx.font = "20px sans-serif";
+    ctx.fillText(captionText, canvas.width / 2, canvas.height - 40);
+
  }
 
 function cropImage(sourceImage, x, y, width, height) {
@@ -151,7 +165,38 @@ function clearCanvasAndPreview() {
   document.getElementById("facePreviewContainer").innerHTML = '';
 }
 
+function refreshTextOnly() {
+  const canvas = document.getElementById("finalCanvas");
+  const ctx = canvas.getContext("2d");
+
+  // Get current image data
+  const img = new Image();
+  img.onload = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    // Draw text again
+    ctx.font = "28px sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+    ctx.shadowBlur = 4;
+
+    const title = document.getElementById("eventTitle").value;
+    ctx.fillText(title, canvas.width / 2, 40);
+
+    const caption = document.getElementById("bottomText").value;
+    ctx.font = "20px sans-serif";
+    ctx.fillText(caption, canvas.width / 2, canvas.height - 40);
+  };
+
+  // Get current canvas image as source
+  img.src = canvas.toDataURL("image/png");
+}
+
 document.getElementById("photoInput").addEventListener("change", handlePhotoUpload);
 document.getElementById("finalCanvas").scrollIntoView({ behavior: "smooth" });
+document.getElementById("eventTitle").addEventListener("input", refreshTextOnly);
+document.getElementById("bottomText").addEventListener("input", refreshTextOnly);
 loadModels();
 loadTemplates();

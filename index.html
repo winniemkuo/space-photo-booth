@@ -55,6 +55,13 @@
   <h2>Select a Template</h2>
   <div id="templateSelector"></div>
 
+  <h3>Customize Your Photo</h3>
+  <label>Event Title:</label>
+  <input type="text" id="eventTitle" value="Jing Mei Math Adventure Night 5/16/2025" style="width: 100%; margin-bottom: 10px;" />
+
+  <label for="bottomText">Bottom Caption:</label>
+  <input type="text" id="bottomText" placeholder="Type your team name or names here" style="width: 100%; margin-bottom: 1rem;" />
+
   <h2>Upload a Group Photo</h2>
   <input type="file" id="photoInput" accept="image/*" />
 
@@ -69,7 +76,7 @@
     function downloadImage() {
       const canvas = document.getElementById("finalCanvas");
       const link = document.createElement("a");
-      link.download = "space_team_photo.png";
+      link.download = "math_adventure_photo.png";
       link.href = canvas.toDataURL("image/png");
       link.click();
     }
